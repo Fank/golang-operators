@@ -22,3 +22,13 @@ func ToIntArray(a []string) ([]int, error) {
 
 	return ia[:el], nil
 }
+
+func ToInterfaceArray(a []string) []interface{} {
+	interfaceArray := make([]interface{}, len(a))
+
+	for i, v := range a {
+		interfaceArray[i] = v
+	}
+
+	return interfaceArray
+}

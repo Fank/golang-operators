@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Join int array with seperator
 func Join(a []int, sep string) string {
 	switch len(a) {
 	case 0:
