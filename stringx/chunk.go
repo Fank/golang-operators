@@ -9,6 +9,8 @@ func ChunkHuman(str string, rows, chars int) ([]string, bool) {
 		return []string{str}, false
 	}
 
+	str = strings.ReplaceAll(str, "\r\n", "\n")
+
 	lines := strings.Split(str, "\n")
 	charsOverflow := false
 	charCount := 0
