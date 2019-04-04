@@ -12,12 +12,21 @@ func ChunkHuman(str string, rows, chars int) ([]string, bool) {
 	lines := strings.Split(str, "\n")
 	charsOverflow := false
 	charCount := 0
+	i := 0
 	for _, v := range lines {
+		if v == "" {
+			continue
+		}
+
 		charCount += len(v)
 		if len(v) > chars {
 			charsOverflow = true
 		}
+
+		lines[i] = v
+		i++
 	}
+	lines = lines[:i]
 
 	if len(lines) <= rows && !charsOverflow {
 		return lines, false
@@ -41,6 +50,11 @@ func ChunkHuman(str string, rows, chars int) ([]string, bool) {
 
 	buffer := ""
 	for i, v := range strings.Split(noNewLineString, " ") {
+		v = strings.TrimSpace(v)
+		if v == "" {
+			continue
+		}
+
 		if len(buffer) + 1 + len(v) > chars {
 			chunks = append(chunks, buffer)
 			if len(chunks) == rows {

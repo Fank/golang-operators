@@ -1,7 +1,7 @@
 package stringx
 
 import (
-	"github.com/influxdata/influxdb/pkg/testing/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -113,6 +113,20 @@ Lorem ipsum dolor sit`,
 			"Lorem ipsum dolor sit amet, consetetur sadipscing",
 			"elitr, sed diam nonumy eirmod tempor invidunt ut",
 			"labore et dolore magna aliquyam",
+		})
+	})
+	t.Run("suffix spaces", func(t *testing.T) {
+		chunk, truncated := ChunkHuman(
+			`Bestellung Nr. 12345
+Kommission: Hr. Foo
+`,
+			4,
+			35,
+		)
+		assert.Equal(t, truncated, false)
+		assert.Equal(t, chunk, []string{
+			"Bestellung Nr. 12345",
+			"Kommission: Hr. Foo",
 		})
 	})
 }
