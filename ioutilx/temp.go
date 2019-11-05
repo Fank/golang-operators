@@ -51,6 +51,8 @@ func TempFilename(dir, pattern string) (name string, err error) {
 				randmu.Unlock()
 			}
 			continue
+		} else if os.IsNotExist(err) {
+			err = nil
 		}
 		break
 	}
