@@ -38,4 +38,12 @@ func TestReadN(t *testing.T) {
 		assert.Equal(t, truncate, false)
 		assert.Equal(t, []byte(nil), b)
 	})
+	t.Run("nilin2out", func(t *testing.T) {
+		s := bytes.Repeat([]byte("a"), 8192)
+		b, truncate, err := ReadN(bytes.NewReader(s), 5000)
+		assert.NoError(t, err)
+		assert.Equal(t, truncate, true)
+		assert.Equal(t, 5000, len(b))
+		assert.Equal(t, b, s[:5000])
+	})
 }

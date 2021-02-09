@@ -6,16 +6,29 @@ import (
 
 // ReadN reads an given amount of bytes and returns it.
 func ReadN(r io.Reader, n int) ([]byte, bool, error) {
-	buf := make([]byte, n+1)
-	v, err := r.Read(buf)
-	if err == io.EOF {
-		return nil, false, nil
-	} else if err != nil {
-		return nil, false, err
+	var s []byte
+	size := 0
+
+	buf := make([]byte, 1024)
+	for {
+		v, err := r.Read(buf)
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return nil, false, err
+		}
+
+		s = append(s, buf...)
+		size += v
+		if size >= n {
+			break
+		}
 	}
-	index := v
-	if v > n {
+
+	index := size
+	if size > n {
 		index = n
 	}
-	return buf[:index], v > n, nil
+
+	return s[:index], size > n, nil
 }
