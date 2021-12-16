@@ -39,21 +39,3 @@ func TestToIntArray(t *testing.T) {
 		}
 	})
 }
-
-func TestToInterfaceArray(t *testing.T) {
-	t.Run("number, char and special", func(t *testing.T) {
-		a := []string{"0", "a", "A", "-"}
-		ia := ToInterfaceArray(a)
-		if len(ia) != 4 {
-			t.Fail()
-		}
-		for _, v := range ia {
-			switch v.(type) {
-			case string:
-				// OK
-			default:
-				t.Fail()
-			}
-		}
-	})
-}
